@@ -9,10 +9,10 @@ const Navbar = () => {
     ]
     const navItems = routes.map(route => <li key={route.id}><NavLink to={route.path}>{route.name}</NavLink></li>)
 
-    const { user, loading } = useContext(AuthContext)
+    const { user, loading, signOutUser } = useContext(AuthContext)
 
     function handleSignOut() {
-        console.log('pore');
+        signOutUser()
     }
 
     return (
@@ -26,7 +26,7 @@ const Navbar = () => {
                         {navItems}
                     </ul>
                 </div>
-                <a className="btn btn-ghost text-xl">Genius Car</a>
+                <Link to="/" className="btn btn-ghost text-xl">Genius Car</Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
@@ -35,7 +35,7 @@ const Navbar = () => {
             </div>
             <div className="navbar-end">
                 {loading ?
-                    <span className="loading loading-ring loading-md"></span>
+                    <span className="loading loading-spinner loading-md"></span>
                     :
                     user ?
                         <div className="dropdown dropdown-end">
@@ -52,10 +52,10 @@ const Navbar = () => {
                         </div>
                         :
                         <div>
-                            <Link to="/sign-in">
+                            <Link to="/login">
                                 <button className='btn btn-sm btn-outline border-none btn-ghost font-semibold text-primary'>Sign in</button>
                             </Link>
-                            <Link to="/sign-up">
+                            <Link to="/signup">
                                 <button className='btn btn-sm btn-ghost btn-outline font-semibold text-primary'>Sign up</button>
                             </Link>
                         </div>

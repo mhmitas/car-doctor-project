@@ -1,19 +1,22 @@
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import imglogin from '../../assets/images/login/login.svg'
 import { AuthContext } from '../../providers/AuthProviders';
+import toast from 'react-hot-toast';
 
 const Login = () => {
+    const navigate = useNavigate()
     const { register, handleSubmit } = useForm()
     const { signInUser } = useContext(AuthContext)
 
     function onsubmit(data) {
-        console.log(data);
+        // console.log(data);
         signInUser(data.email, data.password)
             .then(result => {
                 console.log(result.user);
+                toast.success('Login success')
                 navigate('/')
             })
             .catch(error => { console.log(error); })
