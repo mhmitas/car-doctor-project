@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
 import React, { createContext, useEffect, useState } from 'react';
 import { app } from '../firebase/firebase.config';
 
@@ -21,6 +21,9 @@ const AuthProviders = ({ children }) => {
             console.log(error);
         });
     }
+    function popUpSignIn(provider) {
+        return signInWithPopup(auth, provider)
+    }
 
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {
@@ -38,7 +41,8 @@ const AuthProviders = ({ children }) => {
         setUser,
         createUser,
         signInUser,
-        signOutUser
+        signOutUser,
+        popUpSignIn
     }
 
     return (

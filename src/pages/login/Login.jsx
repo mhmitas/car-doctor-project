@@ -5,15 +5,26 @@ import { Link, useNavigate } from 'react-router-dom';
 import imglogin from '../../assets/images/login/login.svg'
 import { AuthContext } from '../../providers/AuthProviders';
 import toast from 'react-hot-toast';
+import { GoogleAuthProvider } from 'firebase/auth';
 
 const Login = () => {
     const navigate = useNavigate()
     const { register, handleSubmit } = useForm()
-    const { signInUser } = useContext(AuthContext)
+    const { signInUser, popUpSignIn } = useContext(AuthContext)
+    const googleProvider = new GoogleAuthProvider()
 
     function onsubmit(data) {
         // console.log(data);
         signInUser(data.email, data.password)
+            .then(result => {
+                console.log(result.user);
+                toast.success('Login success')
+                navigate('/')
+            })
+            .catch(error => { console.log(error); })
+    }
+    function handlePopUpSignIn(provider) {
+        popUpSignIn(provider)
             .then(result => {
                 console.log(result.user);
                 toast.success('Login success')
@@ -68,6 +79,7 @@ const Login = () => {
                     <div className="form-control">
                         <div className="flex justify-center space-x-2 mt-4">
                             <button
+                                onClick={() => handlePopUpSignIn(googleProvider)}
                                 className="btn btn-outline btn-icon btn-google">
                                 <FaGoogle className='text-xl' /> Google
                             </button>

@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Services = () => {
     const [services, setServices] = useState([])
+    const [loading, setLoading] = useState(null)
     useEffect(() => {
+        setLoading(true)
         fetch('http://localhost:5000/services')
             .then(res => res.json())
             .then(data => {
                 // console.log(data)
                 setServices(data)
+                setLoading(false)
             })
     }, [])
 
@@ -19,6 +22,7 @@ const Services = () => {
                 <h1 className="text-2xl font-bold">Lorem ipsum dolor sit.</h1>
                 <p className="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ullam, iusto beatae aliquam alias quasi? Rem alias ratione doloremque nobis.</p>
             </div>
+            {loading && <p className='text-3xl text-center'>Loading...</p>}
             <div className='grid lg:grid-cols-3 grid-cols-1 sm:grid-cols-2 gap-10'>
                 {services.map(service => <ServicesCard key={service._id} service={service}></ServicesCard>)}
             </div>
@@ -28,19 +32,23 @@ const Services = () => {
 
 export default Services;
 
+
+// ```````````````````service card```````````````````
 function ServicesCard({ service }) {
-    const { title, img, price } = service
-    // console.log(service);
+    const navigate = useNavigate()
+    const { title, img, price } = service;
     return (
-        <div className="card bg-base-100 shadow-md hover:shadow-2xl rounded-sm cursor-pointer">
-            <figure><img src={img} alt="Shoes" /></figure>
-            <div className="card-body pb-0">
-                <h2 className="card-title">{title}</h2>
-                <p className='font-bold text-success'>Price: <span>${price}</span></p>
+        <Link to={`/book-service/${service._id}`}>
+            <div className="card bg-base-100 shadow-md hover:shadow-2xl rounded-sm cursor-pointer">
+                <figure><img src={img} alt="Shoes" /></figure>
+                <div className="card-body pb-0">
+                    <h2 className="card-title">{title}</h2>
+                    <p className='font-bold text-success'>Price: <span>${price}</span></p>
+                </div>
+                <div className="card-actions justify-end">
+                    <button className="btn btn-primary btn-outline btn-sm mr-4 mb-4"><FaArrowRight></FaArrowRight></button>
+                </div>
             </div>
-            <div className="card-actions justify-end">
-                <Link><button className="btn btn-primary btn-outline btn-sm mr-4 mb-4"><FaArrowRight></FaArrowRight></button></Link>
-            </div>
-        </div>
+        </Link >
     )
 }
