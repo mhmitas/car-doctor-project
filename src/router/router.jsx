@@ -6,6 +6,8 @@ import Login from '../pages/login/Login';
 import SignUp from '../pages/signUp/SignUp';
 import Profile from '../pages/profile/Profile';
 import BookAService from '../pages/book-a-service/BookAService';
+import AllBookings from '../pages/allBookings/AllBookings';
+import PrivetRoute from '../routes/PrivetRoute';
 
 const serverLink = 'http://localhost:5000'
 
@@ -30,15 +32,14 @@ const router = createBrowserRouter([
                 path: '/profile',
                 element: <Profile></Profile>
             },
-            // {
-            //     path: '/checkout/:id',
-            //     element: <Checkout></Checkout>,
-            //     loader: ({ params }) => fetch(`${serverLink}/services/${params}`)
-            // },
             {
                 path: 'book-service/:id',
-                element: <BookAService></BookAService>,
-            }
+                element: <PrivetRoute><BookAService></BookAService></PrivetRoute>,
+            },
+            {
+                path: 'my-bookings',
+                element: <PrivetRoute><AllBookings></AllBookings></PrivetRoute>,
+            },
         ]
     }
 ])

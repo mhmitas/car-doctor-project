@@ -3,13 +3,14 @@ import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../../providers/AuthProviders';
 
 const Navbar = () => {
-    const routes = [
-        { name: 'Home', path: '/', id: 1 },
-        { name: 'Home', path: '/', id: 2 },
-    ]
-    const navItems = routes.map(route => <li key={route.id}><NavLink to={route.path}>{route.name}</NavLink></li>)
-
     const { user, loading, signOutUser } = useContext(AuthContext)
+
+    const navItems = <>
+        <li><NavLink to="/">Home</NavLink></li>
+        <li><NavLink to="/">About</NavLink></li>
+        {user?.email && <li><NavLink to="/my-bookings">My Bookings</NavLink></li>}
+    </>
+
 
     function handleSignOut() {
         signOutUser()

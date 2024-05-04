@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import imglogin from '../../assets/images/login/login.svg'
 import { AuthContext } from '../../providers/AuthProviders';
 import toast from 'react-hot-toast';
@@ -13,13 +13,17 @@ const Login = () => {
     const { signInUser, popUpSignIn } = useContext(AuthContext)
     const googleProvider = new GoogleAuthProvider()
 
+    const location = useLocation()
+    console.log(location);
+    console.log(location?.state?.from?.pathname);
+
     function onsubmit(data) {
         // console.log(data);
         signInUser(data.email, data.password)
             .then(result => {
                 console.log(result.user);
                 toast.success('Login success')
-                navigate('/')
+                location?.state ? navigate(location?.state?.from?.pathname) : navigate('/')
             })
             .catch(error => { console.log(error); })
     }
@@ -28,7 +32,7 @@ const Login = () => {
             .then(result => {
                 console.log(result.user);
                 toast.success('Login success')
-                navigate('/')
+                location?.state ? navigate(location?.state) : navigate('/')
             })
             .catch(error => { console.log(error); })
     }

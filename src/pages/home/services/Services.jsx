@@ -23,7 +23,7 @@ const Services = () => {
                 <p className="">Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis ullam, iusto beatae aliquam alias quasi? Rem alias ratione doloremque nobis.</p>
             </div>
             {loading && <p className='text-3xl text-center'>Loading...</p>}
-            <div className='grid lg:grid-cols-3 grid-cols-1 sm:grid-cols-2 gap-10'>
+            <div className='grid lg:grid-cols-4 grid-cols-1 sm:grid-cols-2 gap-10'>
                 {services.map(service => <ServicesCard key={service._id} service={service}></ServicesCard>)}
             </div>
         </div>
@@ -40,14 +40,14 @@ function ServicesCard({ service }) {
     return (
         <Link to={`/book-service/${service._id}`}>
             <div className="card bg-base-100 shadow-md hover:shadow-2xl rounded-sm cursor-pointer">
-                <figure><img src={img} alt="Shoes" /></figure>
-                <div className="card-body pb-0">
+                <figure className=''><img src={img} alt="Shoes" /></figure>
+                <div className="card-body">
                     <h2 className="card-title">{title}</h2>
                     <p className='font-bold text-success'>Price: <span>${price}</span></p>
                 </div>
-                <div className="card-actions justify-end">
+                {/* <div className="card-actions justify-end">
                     <button className="btn btn-primary btn-outline btn-sm mr-4 mb-4"><FaArrowRight></FaArrowRight></button>
-                </div>
+                </div> */}
             </div>
         </Link >
     )

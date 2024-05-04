@@ -20,7 +20,7 @@ const BookAService = () => {
             })
     }, [])
 
-    function onSubmit(data) {
+    function onSubmit(data, e) {
         const currentUser = { name: user.displayName, email: user.email, uid: user.uid }
         data.user = currentUser;
         data.service_id = serviceData._id;
@@ -36,7 +36,8 @@ const BookAService = () => {
             .then(data => {
                 console.log(data)
                 if (data.insertedId) {
-                    toast.success(`Your Booking conformed`)
+                    toast.success(`Added to list`)
+                    e.target.reset()
                 }
             })
 
@@ -71,6 +72,7 @@ const BookAService = () => {
                                 {...register("name")}
                                 type="text"
                                 required
+                                readOnly
                                 defaultValue={user?.displayName && user?.displayName}
                                 className="input input-bordered w-full" />
                         </div>
@@ -92,6 +94,7 @@ const BookAService = () => {
                                 {...register("contact_email")}
                                 type="email"
                                 required
+                                readOnly
                                 defaultValue={user?.email && user?.email}
                                 className="input input-bordered w-full" />
                         </div>
@@ -108,7 +111,7 @@ const BookAService = () => {
                         <textarea {...register("short_description")} className="textarea textarea-bordered my-2 md:col-span-2" required placeholder="Brief description of the issue or service needed"></textarea>
 
                         <input
-                            type="submit" value="Book service" className='btn mt-2 btn-primary w-full md:col-span-2' />
+                            type="submit" value="Add" className='btn mt-2 btn-primary w-full md:col-span-2' />
                     </div>
                 </form>
             </div>
