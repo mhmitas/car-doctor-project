@@ -6,6 +6,7 @@ import imglogin from '../../assets/images/login/login.svg'
 import { AuthContext } from '../../providers/AuthProviders';
 import toast from 'react-hot-toast';
 import { GoogleAuthProvider } from 'firebase/auth';
+import axios from 'axios';
 
 const Login = () => {
     const navigate = useNavigate()
@@ -14,16 +15,22 @@ const Login = () => {
     const googleProvider = new GoogleAuthProvider()
 
     const location = useLocation()
-    console.log(location);
-    console.log(location?.state?.from?.pathname);
+    // console.log(location);
 
     function onsubmit(data) {
         // console.log(data);
         signInUser(data.email, data.password)
             .then(result => {
                 console.log(result.user);
+                const user = data.email;
+                axios.post('http://localhost:5000/jwt', { user })
+                    .then(res => {
+                        console.log(res.data);
+                    })
+
                 toast.success('Login success')
-                location?.state ? navigate(location?.state?.from?.pathname) : navigate('/')
+                // location?.state ? navigate(location?.state?.from?.pathname) : navigate('/')
+                // get access token
             })
             .catch(error => { console.log(error); })
     }
